@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { WorkoutService } from './services/workout.service';
+import { Workout } from './models/workout.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-tailwind-app';
+  title = 'Health Challenge Tracker';
+
+  constructor(private workoutService: WorkoutService) {}
+
+  onWorkoutAdded(event: {name: string, workout: Workout}): void {
+    this.workoutService.addUser(event.name, event.workout);
+  }
 }

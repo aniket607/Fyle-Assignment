@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Remove blue outline from inputs */
+.p-inputtext:enabled:focus {
+    box-shadow: none !important;
+    border-color: rgb(75 85 99) !important; /* gray-600 */
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+    box-shadow: none !important;
+    border-color: rgb(75 85 99) !important;
+}
+
+/* Remove outline from dropdown items */
+.p-dropdown-item:focus {
+    box-shadow: none !important;
+}
+
+/* Custom styles for input hover and focus */
+.p-inputtext:enabled:hover {
+    border-color: rgb(75 85 99) !important;
+}
+
+/* Remove outline from buttons */
+.p-button:focus {
+    box-shadow: none !important;
+}
+
+/* Override PrimeNG default focus styles */
+*:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}

@@ -1,16 +1,34 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { WorkoutFormComponent } from './components/workout-form/workout-form.component';
+import { WorkoutTableComponent } from './components/workout-table/workout-table.component';
+
+// PrimeNG Imports
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WorkoutFormComponent,
+    WorkoutTableComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    BrowserAnimationsModule,
+    FormsModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    DropdownModule,
+    TableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

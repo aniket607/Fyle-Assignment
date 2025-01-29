@@ -1,0 +1,44 @@
+<!-- Search and Filter -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-20 mb-4">
+    <div class="p-float-label">
+      <input id="search" type="text" pInputText [(ngModel)]="searchQuery" 
+             (input)="onSearch()" 
+             class="w-full h-12 border border-gray-300 pl-3 rounded-lg focus:border-blue-900 focus:ring-1 focus:ring-blue-900"
+             autocomplete="off">
+      <label for="search">Search by name</label>
+    </div>
+    
+    <div class="p-float-label">
+      <p-dropdown id="filter" [options]="filterOptions" [(ngModel)]="selectedWorkoutType" 
+                 (onChange)="onWorkoutTypeChange()" 
+                 [autoDisplayFirst]="false"
+                 styleClass="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-900"></p-dropdown>
+      <label for="filter">Filter by workout type</label>
+    </div>
+  </div>
+  
+  <!-- Users Table -->
+  <p-table [value]="filteredUsers" 
+           [paginator]="true" 
+           [rows]="5"
+           [showCurrentPageReport]="true"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [rowsPerPageOptions]="[5,10,25]"
+           styleClass="p-datatable-sm">
+    <ng-template pTemplate="header">
+      <tr class="bg-gray-50">
+        <th class="font-semibold">Name</th>
+        <th class="font-semibold">Workouts</th>
+        <th class="font-semibold">Number of Workouts</th>
+        <th class="font-semibold">Total Workout Minutes</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr class="hover:bg-gray-50">
+        <td>{{ user.name }}</td>
+        <td>{{ formatWorkouts(user.workouts) }}</td>
+        <td>{{ user.workouts?.length || 0 }}</td>
+        <td>{{ getTotalMinutes(user.workouts) }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
