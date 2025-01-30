@@ -24,7 +24,7 @@ jobs:
 
       - name: Build
         run: |
-          npm run build -- --configuration production --base-href=/Fyle-Assignment/
+          ng build --configuration production --base-href=/Fyle-Assignment/
           cp dist/fyle-challenge/index.html dist/fyle-challenge/404.html
           touch dist/fyle-challenge/.nojekyll
 
