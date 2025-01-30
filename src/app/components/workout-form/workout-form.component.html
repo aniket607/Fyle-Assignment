@@ -1,11 +1,11 @@
-<form #workoutForm="ngForm" (ngSubmit)="addWorkout()" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<form #workoutForm="ngForm" (ngSubmit)="addWorkout()" class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
   <!-- Name Input -->
   <div class="flex flex-col space-y-1">
     <span class="p-float-label">
       <input pInputText id="name" [(ngModel)]="userName" 
              name="userName" [required]="true" minlength="3" 
              #name="ngModel" autocomplete="off"
-             class="w-full h-12 border border-gray-300 pl-3 rounded-lg focus:border-blue-900 focus:ring-1 focus:ring-blue-900">
+             class="w-full h-12 border border-gray-300 pl-3 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400">
       <label for="name">User Name*</label>
     </span>
     <small class="text-red-500 text-xs h-4 ml-1" *ngIf="name.invalid && (name.dirty || formSubmitted)">
@@ -19,7 +19,7 @@
       <p-dropdown id="type" [options]="workoutTypes" [(ngModel)]="workoutType" 
                  name="workoutType" [required]="true" [autoDisplayFirst]="false"
                  #type="ngModel"
-                 styleClass="w-full h-12 border border-gray-300 rounded-lg focus:border-blue-900"></p-dropdown>
+                 styleClass="w-full h-12 border border-gray-300 rounded-lg  hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400"></p-dropdown>
       <label for="type">Workout Type*</label>
     </span>
     <small class="text-red-500 text-xs h-4 ml-1" *ngIf="type.invalid && (type.dirty || formSubmitted)">
@@ -33,7 +33,7 @@
       <input pInputText id="minutes" type="number" [(ngModel)]="workoutMinutes" 
              name="workoutMinutes" [required]="true" min="1" max="240"
              #minutes="ngModel"
-             class="w-full h-12 border pl-3 border-gray-300 rounded-lg focus:border-blue-900 focus:ring-1 focus:ring-blue-900">
+             class="w-full h-12 border pl-3 border-gray-300 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400">
       <label for="minutes">Workout Minutes*</label>
     </span>
     <small class="text-red-500 text-xs h-4 ml-1" *ngIf="minutes.invalid && (minutes.dirty || formSubmitted)">
