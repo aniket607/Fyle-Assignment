@@ -4,11 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && cp dist/fyle-challenge/index.html dist/fyle-challenge/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:coverage": "ng test --no-watch --code-coverage",
-    "deploy": "ng build --base-href=/Fyle-Assignment/ && npx gh-pages -d dist/fyle-challenge"
+    "deploy": "ng build --base-href=/Fyle-Assignment/ && cp dist/fyle-challenge/index.html dist/fyle-challenge/404.html && npx gh-pages -d dist/fyle-challenge"
   },
   "private": true,
   "dependencies": {
