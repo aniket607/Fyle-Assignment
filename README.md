@@ -54,6 +54,14 @@ npm run test:coverage
 
 The coverage report can be found in the `coverage` directory after running `npm run test:coverage`.
 
+## Deployment
+
+This project is deployed on GitHub Pages. To deploy new changes:
+
+1. Make sure all changes are committed and pushed to GitHub
+2. Run `ng deploy --base-href=/Fyle-Assignment/`
+3. The site will be available at `https://aniket607.github.io/Fyle-Assignment/`
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
