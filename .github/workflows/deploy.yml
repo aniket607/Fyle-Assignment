@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # or master, depending on your default branch name
+      - master
 
 jobs:
   deploy:
@@ -23,17 +23,20 @@ jobs:
         run: npm install
 
       - name: Build
-        run: ng build --configuration production --base-href=/Fyle-Assignment/
-
-      - name: Prepare for deployment
         run: |
-          cd dist/fyle-challenge
-          cp index.html 404.html
-          touch .nojekyll
+          npm run build -- --configuration production --base-href=/Fyle-Assignment/
+          cp dist/fyle-challenge/index.html dist/fyle-challenge/404.html
+          touch dist/fyle-challenge/.nojekyll
+
+      - name: List build output
+        run: ls -la dist/fyle-challenge
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist/fyle-challenge
           branch: gh-pages
-          clean: true 
+          clean: true
+          clean-exclude: |
+            .nojekyll
+            404.html 
