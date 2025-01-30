@@ -1,8 +1,12 @@
 [build]
-  command = "ng build"
+  command = "ng build --configuration production --base-href=/"
   publish = "dist/fyle-challenge"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200 
+  status = 200
+
+[build.environment]
+  NODE_VERSION = "18.19.1"
+  NPM_VERSION = "9.6.3" 

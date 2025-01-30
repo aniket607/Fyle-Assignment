@@ -56,11 +56,13 @@ The coverage report can be found in the `coverage` directory after running `npm 
 
 ## Deployment
 
-This project is deployed on GitHub Pages. To deploy new changes:
+This project is deployed on Netlify. The site automatically deploys when changes are pushed to the master branch.
 
-1. Make sure all changes are committed and pushed to GitHub
-2. Run `ng deploy --base-href=/Fyle-Assignment/`
-3. The site will be available at `https://aniket607.github.io/Fyle-Assignment/`
+To test production build locally:
+```bash
+ng build --configuration production
+npx serve dist/fyle-challenge
+```
 
 ## Further help
 
