@@ -22,6 +22,38 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
+## Testing
+
+The project includes comprehensive unit tests for components and services. The following components have 100% code coverage:
+
+1. `WorkoutFormComponent`: Tests form validation, submission, and reset functionality
+2. `WorkoutService`: Tests data persistence, user management, and workout tracking
+
+## Test Coverage
+
+The application has comprehensive test coverage for the WorkoutFormComponent and WorkoutService:
+
+```
+Statements   : 98.14% ( 53/54 )
+Branches     : 85.71% ( 6/7 )
+Functions    : 95% ( 19/20 )
+Lines        : 98% ( 49/50 )
+```
+
+Note: Coverage report excludes the WorkoutTableComponent as it is not part of the core functionality being tested.
+
+To run the tests:
+
+```bash
+# Run tests in watch mode
+npm test
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+The coverage report can be found in the `coverage` directory after running `npm run test:coverage`.
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

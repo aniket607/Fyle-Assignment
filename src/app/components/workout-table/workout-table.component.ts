@@ -76,6 +76,8 @@ export class WorkoutTableComponent implements OnInit, OnDestroy {
   }
 
   formatWorkouts(workouts: Workout[]): string {
-    return workouts.map(w => w.type).join(', ');
+    // Get unique workout types using Set
+    const uniqueTypes = [...new Set(workouts.map(w => w.type))];
+    return uniqueTypes.join(', ');
   }
 }
