@@ -1,9 +1,16 @@
-<div class="mb-6">
-  <p-dropdown [options]="users" [(ngModel)]="selectedUser" optionLabel="name" optionValue="name"
-    (onChange)="onUserChange()" placeholder="Select a user to view their progress"
-    styleClass="ml-2 h-12 border border-gray-300 rounded-lg  hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400"/>
-</div>
+<div class="mt-8">
+  <div class="p-float-label mb-6">
+    <p-dropdown [options]="users()" 
+               optionLabel="name"
+               [ngModel]="getSelectedUser()"
+               (ngModelChange)="updateSelectedUser($event)"
+               [autoDisplayFirst]="false"
+               styleClass="w-full md:w-64 h-12 border border-gray-300 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400">
+    </p-dropdown>
+    <label>Select User</label>
+  </div>
 
-<div *ngIf="chartData" class="flex mx-auto">
-  <p-chart type="bar" [data]="chartData" [options]="chartOptions" class="w-full md:w-2/3"/>
+  <div *ngIf="chartData()" class="flex mx-auto">
+    <p-chart type="bar" [data]="chartData()" [options]="chartOptions" class="w-full md:w-2/3"/>
+  </div>
 </div>

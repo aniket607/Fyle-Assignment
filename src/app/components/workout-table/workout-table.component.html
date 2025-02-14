@@ -1,24 +1,24 @@
 <!-- Search and Filter -->
 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-4 mt-6 mb-4">
     <div class="p-float-label">
-      <input id="search" type="text" pInputText [(ngModel)]="searchQuery" 
-             (input)="onSearch()" 
+      <input id="search" type="text" pInputText [ngModel]="getSearchQuery()" 
+             (ngModelChange)="updateSearchQuery($event)" 
              class="w-full h-12 border border-gray-300 pl-3 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400"
              autocomplete="off">
       <label for="search">Search by name</label>
     </div>
     
     <div class="p-float-label">
-      <p-dropdown id="filter" [options]="filterOptions" [(ngModel)]="selectedWorkoutType" 
-                 (onChange)="onWorkoutTypeChange()" 
+      <p-dropdown id="filter" [options]="filterOptions" [ngModel]="getSelectedWorkoutType()" 
+                 (ngModelChange)="updateWorkoutType($event)" 
                  [autoDisplayFirst]="false"
-                 styleClass="w-full h-12 border border-gray-300 rounded-lg  hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400"></p-dropdown>
+                 styleClass="w-full h-12 border border-gray-300 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400"></p-dropdown>
       <label for="filter">Filter by workout type</label>
     </div>
   </div>
   
   <!-- Users Table -->
-  <p-table [value]="filteredUsers" 
+  <p-table [value]="filteredUsers()" 
            [paginator]="true" 
            [rows]="5"
            [showCurrentPageReport]="true"
@@ -26,7 +26,7 @@
            [rowsPerPageOptions]="[5,10,25]"
            styleClass="p-datatable-sm border border-gray-300 rounded-lg">
     <ng-template pTemplate="header">
-    <tr class="rounded-lg">
+      <tr class="rounded-lg">
         <th class="font-semibold p-3 bg-gray-500 text-white">Name</th>
         <th class="font-semibold p-3 bg-gray-500 text-white">Workouts</th>
         <th class="font-semibold p-3 bg-gray-500 text-white">Number of Workouts</th>

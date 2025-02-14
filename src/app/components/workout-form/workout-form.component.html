@@ -2,13 +2,14 @@
   <!-- Name Input -->
   <div class="flex flex-col space-y-1">
     <span class="p-float-label">
-      <input pInputText id="name" [(ngModel)]="userName" 
+      <input pInputText id="name" [ngModel]="getUserName()" 
+             (ngModelChange)="updateUserName($event)"
              name="userName" [required]="true" minlength="3" 
              #name="ngModel" autocomplete="off"
              class="w-full h-12 border border-gray-300 pl-3 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400">
       <label for="name">User Name*</label>
     </span>
-    <small class="text-red-500 text-xs h-4 ml-1" *ngIf="name.invalid && (name.dirty || formSubmitted)">
+    <small class="text-red-500 text-xs h-4 ml-1" *ngIf="name.invalid && (name.dirty || getFormSubmitted())">
       Name is required and must be at least 3 characters
     </small>
   </div>
@@ -16,13 +17,14 @@
   <!-- Workout Type Dropdown -->
   <div class="flex flex-col space-y-1">
     <span class="p-float-label">
-      <p-dropdown id="type" [options]="workoutTypes" [(ngModel)]="workoutType" 
+      <p-dropdown id="type" [options]="workoutTypes" [ngModel]="getWorkoutType()" 
+                 (ngModelChange)="updateWorkoutType($event)"
                  name="workoutType" [required]="true" [autoDisplayFirst]="false"
                  #type="ngModel"
-                 styleClass="w-full h-12 border border-gray-300 rounded-lg  hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400"></p-dropdown>
+                 styleClass="w-full h-12 border border-gray-300 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400"></p-dropdown>
       <label for="type">Workout Type*</label>
     </span>
-    <small class="text-red-500 text-xs h-4 ml-1" *ngIf="type.invalid && (type.dirty || formSubmitted)">
+    <small class="text-red-500 text-xs h-4 ml-1" *ngIf="type.invalid && (type.dirty || getFormSubmitted())">
       Workout type is required
     </small>
   </div>
@@ -30,13 +32,14 @@
   <!-- Minutes Input -->
   <div class="flex flex-col space-y-1">
     <span class="p-float-label">
-      <input pInputText id="minutes" type="number" [(ngModel)]="workoutMinutes" 
+      <input pInputText id="minutes" type="number" [ngModel]="getWorkoutMinutes()" 
+             (ngModelChange)="updateWorkoutMinutes($event)"
              name="workoutMinutes" [required]="true" min="1" max="240"
              #minutes="ngModel"
              class="w-full h-12 border pl-3 border-gray-300 rounded-lg hover:border-gray-400 focus:border-slate-400 focus:ring-1 focus:ring-slate-400">
       <label for="minutes">Workout Minutes*</label>
     </span>
-    <small class="text-red-500 text-xs h-4 ml-1" *ngIf="minutes.invalid && (minutes.dirty || formSubmitted)">
+    <small class="text-red-500 text-xs h-4 ml-1" *ngIf="minutes.invalid && (minutes.dirty || getFormSubmitted())">
       Minutes must be between 1 and 240
     </small>
   </div>

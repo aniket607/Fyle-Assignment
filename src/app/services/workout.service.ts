@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable, signal, computed } from '@angular/core';
 import { UserData, Workout } from '../models/workout.model';
 import { WORKOUT_TYPES, WorkoutType } from '../constants/workout.constants';
 
@@ -8,7 +7,12 @@ import { WORKOUT_TYPES, WorkoutType } from '../constants/workout.constants';
 })
 export class WorkoutService {
   private readonly STORAGE_KEY = 'workoutData';
-  private usersSubject = new BehaviorSubject<UserData[]>([]);
+  
+  // Create a signal for users data
+  private users = signal<UserData[]>([]);
+
+  // Computed signal for filtered users
+  private filteredUsers = computed(() => this.users());
 
   private initialData: UserData[] = [
     {
@@ -45,54 +49,56 @@ export class WorkoutService {
     if (!localStorage.getItem(this.STORAGE_KEY)) {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.initialData));
     }
-    this.usersSubject.next(this.loadUsers());
+    this.users.set(this.loadUsers());
   }
 
   private loadUsers(): UserData[] {
     return JSON.parse(localStorage.getItem(this.STORAGE_KEY) || '[]');
   }
 
-  getAllUsers(): UserData[] {
-    return this.loadUsers();
+  // Public methods to access signals
+  users$() {
+    return this.users;
   }
 
-  getUsersObservable() {
-    return this.usersSubject.asObservable();
+  filteredUsers$() {
+    return this.filteredUsers;
   }
 
   addUser(name: string, workout: Workout): void {
-    const users = this.loadUsers();
-    const existingUser = users.find(u => u.name.toLowerCase() === name.toLowerCase());
+    const currentUsers = this.users();
+    const existingUser = currentUsers.find(u => u.name.toLowerCase() === name.toLowerCase());
 
     if (existingUser) {
-      existingUser.workouts.push(workout);
+      const updatedUsers = currentUsers.map(user => {
+        if (user.id === existingUser.id) {
+          return {
+            ...user,
+            workouts: [...user.workouts, workout]
+          };
+        }
+        return user;
+      });
+      this.users.set(updatedUsers);
     } else {
       const newUser: UserData = {
-        id: users.length + 1,
+        id: currentUsers.length + 1,
         name,
         workouts: [workout]
       };
-      users.push(newUser);
+      this.users.set([...currentUsers, newUser]);
     }
     
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(users));
-    this.usersSubject.next(users);
-  }
-
-  searchUsers(query: string): UserData[] {
-    const users = this.loadUsers();
-    return users.filter(user => 
-      user.name.toLowerCase().includes(query.toLowerCase())
-    );
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.users()));
   }
 
   filterByWorkoutType(type: WorkoutType | 'All'): UserData[] {
+    const currentUsers = this.users();
     if (type === 'All') {
-      return this.loadUsers();
+      return currentUsers;
     }
     
-    const users = this.loadUsers();
-    return users.filter(user => 
+    return currentUsers.filter(user => 
       user.workouts.some(workout => workout.type === type)
     );
   }
