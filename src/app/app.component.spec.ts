@@ -1,37 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { WorkoutFormComponent } from './components/workout-form/workout-form.component';
-import { WorkoutTableComponent } from './components/workout-table/workout-table.component';
-import { FormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { DropdownModule } from 'primeng/dropdown';
-import { CardModule } from 'primeng/card';
-import { TableModule } from 'primeng/table';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { WorkoutService } from './services/workout.service';
+import { WORKOUT_TYPES } from './constants/workout.constants';
+import { Workout } from './models/workout.model';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
+  let workoutService: WorkoutService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
-        WorkoutFormComponent,
-        WorkoutTableComponent
-      ],
-      imports: [
-        FormsModule,
-        ButtonModule,
-        InputTextModule,
-        DropdownModule,
-        CardModule,
-        TableModule
-      ]
+      declarations: [AppComponent],
+      providers: [WorkoutService],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
+    workoutService = TestBed.inject(WorkoutService);
     fixture.detectChanges();
   });
 
@@ -41,5 +29,15 @@ describe('AppComponent', () => {
 
   it('should have as title "Health Challenge Tracker"', () => {
     expect(component.title).toEqual('Health Challenge Tracker');
+  });
+
+  it('should handle workout added event', () => {
+    const workout: Workout = { type: WORKOUT_TYPES[0], minutes: 30 };
+    const name = 'John Doe';
+    
+    spyOn(workoutService, 'addUser');
+    component.onWorkoutAdded({ name, workout });
+    
+    expect(workoutService.addUser).toHaveBeenCalledWith(name, workout);
   });
 });

@@ -34,13 +34,13 @@ The project includes comprehensive unit tests for components and services. The f
 The application has comprehensive test coverage for the WorkoutFormComponent and WorkoutService:
 
 ```
-Statements   : 98.14% ( 53/54 )
-Branches     : 85.71% ( 6/7 )
-Functions    : 95% ( 19/20 )
-Lines        : 98% ( 49/50 )
+Statements   : 100% ( 63/63 )
+Branches     : 87.5% ( 7/8 )
+Functions    : 100% ( 26/26 )
+Lines        : 100% ( 58/58 )
 ```
 
-Note: Coverage report excludes the WorkoutTableComponent as it is not part of the core functionality being tested.
+Note: Coverage report excludes the WorkoutTable,WorkoutChart Components as it is not part of the core functionality being tested.
 
 To run the tests:
 

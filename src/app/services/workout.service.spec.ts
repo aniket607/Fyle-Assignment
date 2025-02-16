@@ -50,17 +50,31 @@ describe('WorkoutService', () => {
   });
 
   it('should initialize with default data', () => {
-    const users = service.getAllUsers();
+    const users = service.users$()();
     expect(users.length).toBe(3);
     expect(users[0].name).toBe('John Doe');
     expect(users[0].workouts.length).toBe(2);
+  });
+
+  it('should provide access to users signal', () => {
+    const usersSignal = service.users$();
+    expect(usersSignal).toBeTruthy();
+    expect(typeof usersSignal).toBe('function');
+    expect(usersSignal()).toEqual(mockInitialData);
+  });
+
+  it('should provide access to filtered users signal', () => {
+    const filteredUsersSignal = service.filteredUsers$();
+    expect(filteredUsersSignal).toBeTruthy();
+    expect(typeof filteredUsersSignal).toBe('function');
+    expect(filteredUsersSignal()).toEqual(mockInitialData);
   });
 
   it('should add new user workout', () => {
     const newWorkout: Workout = { type: 'Running', minutes: 30 };
     service.addUser('Alice Brown', newWorkout);
     
-    const users = service.getAllUsers();
+    const users = service.users$()();
     expect(users.length).toBe(4);
     const newUser = users.find(u => u.name === 'Alice Brown');
     expect(newUser).toBeTruthy();
@@ -72,17 +86,10 @@ describe('WorkoutService', () => {
     const newWorkout: Workout = { type: 'Swimming', minutes: 45 };
     service.addUser('John Doe', newWorkout);
     
-    const users = service.getAllUsers();
+    const users = service.users$()();
     const updatedUser = users.find(u => u.name === 'John Doe');
     expect(updatedUser?.workouts.length).toBe(3);
     expect(updatedUser?.workouts[2]).toEqual(newWorkout);
-  });
-
-  it('should search users by name', () => {
-    const results = service.searchUsers('John');
-    expect(results.length).toBe(2); // John Doe and Mike Johnson
-    expect(results[0].name).toBe('John Doe');
-    expect(results[1].name).toBe('Mike Johnson');
   });
 
   it('should filter users by workout type', () => {
@@ -104,5 +111,14 @@ describe('WorkoutService', () => {
     ];
     const total = service.getTotalWorkoutMinutes(workouts);
     expect(total).toBe(75);
+  });
+
+  it('should persist users to localStorage', () => {
+    const newWorkout: Workout = { type: 'Running', minutes: 30 };
+    service.addUser('Alice Brown', newWorkout);
+    
+    const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    expect(storedData.length).toBe(4);
+    expect(storedData.find((u: UserData) => u.name === 'Alice Brown')).toBeTruthy();
   });
 });

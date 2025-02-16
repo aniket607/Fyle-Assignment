@@ -34,23 +34,49 @@ describe('WorkoutFormComponent', () => {
   });
 
   it('should initialize with empty form values', () => {
-    expect(component.userName).toBe('');
-    expect(component.workoutType).toBe(WORKOUT_TYPES[0]);
-    expect(component.workoutMinutes).toBeNull();
-    expect(component.formSubmitted).toBeFalse();
+    expect(component.getUserName()).toBe('');
+    expect(component.getWorkoutType()).toBe(WORKOUT_TYPES[0]);
+    expect(component.getWorkoutMinutes()).toBeNull();
+    expect(component.getFormSubmitted()).toBeFalse();
   });
 
   it('should have workout type options', () => {
     expect(component.workoutTypes.map(opt => opt.value)).toEqual(WORKOUT_TYPES);
   });
 
+  describe('Getters and Setters', () => {
+    it('should update and get userName', () => {
+      const testName = 'John';
+      component.updateUserName(testName);
+      expect(component.getUserName()).toBe(testName);
+    });
+
+    it('should update and get workoutType', () => {
+      const testType = WORKOUT_TYPES[1];
+      component.updateWorkoutType(testType);
+      expect(component.getWorkoutType()).toBe(testType);
+    });
+
+    it('should update and get workoutMinutes', () => {
+      const testMinutes = 45;
+      component.updateWorkoutMinutes(testMinutes);
+      expect(component.getWorkoutMinutes()).toBe(testMinutes);
+    });
+
+    it('should update and get formSubmitted', () => {
+      expect(component.getFormSubmitted()).toBeFalse();
+      component.addWorkout();
+      expect(component.getFormSubmitted()).toBeTrue();
+    });
+  });
+
   it('should emit workoutAdded event with valid form data', fakeAsync(() => {
     spyOn(component.workoutAdded, 'emit');
 
     // Set valid form values
-    component.userName = 'John';
-    component.workoutType = 'Running';
-    component.workoutMinutes = 30;
+    component.updateUserName('John');
+    component.updateWorkoutType('Running');
+    component.updateWorkoutMinutes(30);
     fixture.detectChanges();
 
     // Wait for form validation
@@ -75,9 +101,9 @@ describe('WorkoutFormComponent', () => {
     spyOn(component.workoutAdded, 'emit');
 
     // Set invalid form values (empty name)
-    component.userName = '';
-    component.workoutType = 'Running';
-    component.workoutMinutes = 30;
+    component.updateUserName('');
+    component.updateWorkoutType('Running');
+    component.updateWorkoutMinutes(30);
     fixture.detectChanges();
 
     // Wait for form validation
@@ -91,9 +117,9 @@ describe('WorkoutFormComponent', () => {
 
   it('should reset form after successful submission', fakeAsync(() => {
     // Set form values
-    component.userName = 'John';
-    component.workoutType = 'Running';
-    component.workoutMinutes = 30;
+    component.updateUserName('John');
+    component.updateWorkoutType('Running');
+    component.updateWorkoutMinutes(30);
     fixture.detectChanges();
 
     // Wait for form validation
@@ -109,25 +135,19 @@ describe('WorkoutFormComponent', () => {
 
     // Check if form was reset
     expect(component.workoutForm.resetForm).toHaveBeenCalled();
-    expect(component.userName).toBe('');
-    expect(component.workoutType).toBe(WORKOUT_TYPES[0]);
-    expect(component.workoutMinutes).toBeNull();
-    expect(component.formSubmitted).toBeFalse();
+    expect(component.getUserName()).toBe('');
+    expect(component.getWorkoutType()).toBe(WORKOUT_TYPES[0]);
+    expect(component.getWorkoutMinutes()).toBeNull();
+    expect(component.getFormSubmitted()).toBeFalse();
   }));
-
-  it('should set formSubmitted to true on form submission', () => {
-    expect(component.formSubmitted).toBeFalse();
-    component.addWorkout();
-    expect(component.formSubmitted).toBeTrue();
-  });
 
   it('should validate name length', fakeAsync(() => {
     spyOn(component.workoutAdded, 'emit');
 
     // Set invalid name (less than 3 characters)
-    component.userName = 'Jo';
-    component.workoutType = 'Running';
-    component.workoutMinutes = 30;
+    component.updateUserName('Jo');
+    component.updateWorkoutType('Running');
+    component.updateWorkoutMinutes(30);
     fixture.detectChanges();
 
     // Wait for form validation
@@ -143,26 +163,26 @@ describe('WorkoutFormComponent', () => {
     spyOn(component.workoutAdded, 'emit');
 
     // Set valid name and workout type
-    component.userName = 'John';
-    component.workoutType = 'Running';
+    component.updateUserName('John');
+    component.updateWorkoutType('Running');
     fixture.detectChanges();
 
     // Test minutes below minimum
-    component.workoutMinutes = 0;
+    component.updateWorkoutMinutes(0);
     fixture.detectChanges();
     tick();
     component.addWorkout();
     expect(component.workoutAdded.emit).not.toHaveBeenCalled();
 
     // Test minutes above maximum
-    component.workoutMinutes = 241;
+    component.updateWorkoutMinutes(241);
     fixture.detectChanges();
     tick();
     component.addWorkout();
     expect(component.workoutAdded.emit).not.toHaveBeenCalled();
 
     // Test valid minutes
-    component.workoutMinutes = 120;
+    component.updateWorkoutMinutes(120);
     fixture.detectChanges();
     tick();
     component.addWorkout();
